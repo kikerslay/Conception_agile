@@ -87,7 +87,7 @@ public class Player
 		  graphicsContext.restore(); // back to original state (before rotation)
 	  }
 
-	  private void rotate(GraphicsContext gc, double angle, double px, double py) {
+	 private void rotate(GraphicsContext gc, double angle, double px, double py) {
 		  Rotate r = new Rotate(angle, px, py);
 		  gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
 	  }

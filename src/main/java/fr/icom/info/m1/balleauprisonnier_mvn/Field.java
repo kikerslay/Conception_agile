@@ -20,6 +20,7 @@ public class Field extends Canvas {
 	/** Joueurs */
 	Player [] equipe1 = new Player[3];
 	Player [] equipe2 = new Player[3];
+	
 	/** Couleurs possibles */
 	String[] colorMap = new String[] {"blue", "green", "orange", "purple", "yellow"};
 	/** Tableau traçant les evenements */
@@ -30,6 +31,8 @@ public class Field extends Canvas {
     final int width;
     final int height;
     
+    /** Balle **/
+    Projectile [] balle = new Projectile[1];
     /**
      * Canvas dans lequel on va dessiner le jeu.
      * 
@@ -47,7 +50,9 @@ public class Field extends Canvas {
 		this.setFocusTraversable(true);
 		
         gc = this.getGraphicsContext2D();
+        balle[0] = new Projectile(gc, w/2, h-50);
         
+        balle[0].draw();
         /** On initialise le terrain de jeu */
     	equipe1[0] = new Player(gc, colorMap[0], w/2, h-50, "bottom");
     	equipe1[0].display();
@@ -66,7 +71,7 @@ public class Field extends Canvas {
 
 		equipe2[2] = new PlayerIA(gc, colorMap[1], w-50, 20, "top");
     	equipe2[2].display();
-
+    	
 
 	    /** 
 	     * Event Listener du clavier 
@@ -115,7 +120,8 @@ public class Field extends Canvas {
 	            // On nettoie le canvas a chaque frame
 	            gc.setFill( Color.LIGHTGRAY);
 	            gc.fillRect(0, 0, width, height);
-	        	
+	           //balle[0] = new Projectile(gc, w/2, h-5);
+	            balle[0].draw();
 	            // Deplacement et affichage des joueurs
 	        	for (int i = 0; i < equipe1.length; i++) 
 	    	    {
@@ -137,6 +143,7 @@ public class Field extends Canvas {
 	        		}
 					if (i==0 && input.contains("ENTER")){
 	        			equipe1[i].shoot();
+	        			//balle[0].draw()
 					}
 	        		if (i==0 && input.contains("Q"))
 	        		{
@@ -173,5 +180,8 @@ public class Field extends Canvas {
 
 	public Player[] getEquipe2() {
 		return equipe2;
+	}
+	public Projectile[] getProjectile() {
+		return balle;
 	}
 }
