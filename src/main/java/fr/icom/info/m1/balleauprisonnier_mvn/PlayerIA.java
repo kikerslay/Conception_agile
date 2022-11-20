@@ -8,5 +8,8 @@ public class PlayerIA extends Player{
         super(gc, color, xInit, yInit, side);
         
     }
+    public void move() {
+    	
+    }
     
 }

@@ -4,57 +4,49 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
 
-public class Projectile {
+public class Projectile extends Entity{
 	
 	public static final double ballrayon = 15; // rayon fix de la balle 
-	public double ballposX = 5; // position X de la balle
-	public double ballposY = 5; // position Y de la balle
-	public int ballspeedX = 10; // vitesse sur l'axe des X de la balle
-	public int ballspeedY = 10; // vitesse sur l'axe des X de la balle
-	
-	GraphicsContext graphicsContext;
-	Image directionArrow;
-	Sprite sprite;
-	
-	
-	public Projectile(GraphicsContext gc, double posX, double posY)
+
+	public Projectile(GraphicsContext gc, double x, double y)
 	{
 		graphicsContext = gc;
-		ballposX = posX;
-		ballposY = posY;
+		posX = x;
+		posY = y;
+		speed = 0.5;
 		Image tilesheetImage = new Image("assets/ball.png");
-	    sprite = new Sprite(tilesheetImage, 0,0, Duration.seconds(.2), "top");
-	    sprite.setX(ballposX);
-	    sprite.setY(ballposY);
+	    sprite = new Sprite(tilesheetImage, 0,0, Duration.seconds(.2), null);
+	    sprite.setX(posX);
+	    sprite.setY(posY);
 	}
 	
 	// getter de la positionX
 	public double getPositionX() {
-		return ballposX;
+		return posX;
 	}
 	
 	// getter de la positionY
 	public double getPositionY() {
-		return ballposY;
+		return posY;
 	}
 	
 	public void SetPositionX(double x) {
-		this.ballposX = x;
+		this.posX = x;
 	}
 	
 	// getter de la positionY
 	public void SetPositionY(double y) {
-		this.ballposY = y;
+		this.posY = y;
 	}
 	
 	// On affiche la balle 
-	public void draw(/**double x, double y, bool pos**/) {
+	public void draw(Entity en) {
 		//graphicsContext.fillOval(ballspeedX, ballspeedY, ballrayon, ballrayon);
-		double posY = getPositionY();
-		graphicsContext.drawImage(new Image("assets/ball.png"), ballposX, posY);
-		System.out.println(ballposY);
-		double cpt = posY;
-		cpt = cpt -0.5;
+		double pos_Y = en.posY;
+		graphicsContext.drawImage(new Image("assets/ball.png"), en.posX, pos_Y);
+		System.out.println(posY);
+		double cpt = en.posY;
+		cpt = cpt - speed;
 		this.SetPositionY(cpt);
 	}
 	

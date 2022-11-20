@@ -27,17 +27,19 @@ class Sprite extends ImageView {
 
         numCellsWalk = 9;
 
-        int lineNumber = 8;
-        if(side == "top"){
+        int lineNumber = 7;
+        if(side == "right"){
             lineNumber += 2;
         }
 
         walkClips = new Rectangle2D[numCellsWalk];
+      
         for (int i = 0; i < numCellsWalk; i++) {
             walkClips[i] = new Rectangle2D(
                     i * cellWidth, cellHeight*lineNumber,
                     cellWidth, cellHeight
             );
+            System.out.println(walkClips[i]);
         }
 
         setImage(animationImage);

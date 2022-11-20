@@ -1,12 +1,14 @@
 package fr.icom.info.m1.balleauprisonnier_mvn;
 
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Rotate;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 /**
@@ -14,20 +16,15 @@ import javafx.util.Duration;
  * Classe gerant un joueur
  *
  */
-public class Player 
+public class Player extends Entity
 {
-	  double x;       // position horizontale du joueur
-	  final double y; 	  // position verticale du joueur
-	  double angle = 90; // rotation du joueur, devrait toujour être en 0 et 180
-	  double step;    // pas d'un joueur
+	
 	  String playerColor;
 	  
 	  // On une image globale du joueur 
-	  Image directionArrow;
-	  Sprite sprite;
+	  //Image directionArrow;
+	  //Sprite sprite;
 	  ImageView PlayerDirectionArrow;
-	  
-	  GraphicsContext graphicsContext;
 	  
 	  /**
 	   * Constructeur du Joueur
@@ -39,15 +36,15 @@ public class Player
 	  Player(GraphicsContext gc, String color, int xInit, int yInit, String side)
 	  {
 		// Tous les joueurs commencent au centre du canvas, 
-	    x = xInit;               
-	    y = yInit;
+	    posX = xInit;               
+	    posY = yInit;
 	    graphicsContext = gc;
 	    playerColor=color;
-	    
 	    angle = 0;
+	    //hitbox = new Rectangle();
 
 	    // On charge la representation du joueur
-        if(side=="top"){
+        /**if(side=="top"){
         	directionArrow = new Image("assets/PlayerArrowDown.png");
 		}
 		else{
@@ -59,21 +56,25 @@ public class Player
         PlayerDirectionArrow.setFitWidth(10);
         PlayerDirectionArrow.setPreserveRatio(true);
         PlayerDirectionArrow.setSmooth(true);
-        PlayerDirectionArrow.setCache(true);
-
-        Image tilesheetImage = new Image("assets/orc.png");
-        sprite = new Sprite(tilesheetImage, 0,0, Duration.seconds(.2), side);
-        sprite.setX(x);
-        sprite.setY(y);
+        PlayerDirectionArrow.setCache(true);**/
+	    if(playerColor == "blue") {
+	        Image tilesheetImage = new Image("assets/PlayerBlue.png");
+	        sprite = new Sprite(tilesheetImage, 0,0, Duration.seconds(.2), side);
+	        sprite.setX(posX);
+	        sprite.setY(posY);
+	    }else {
+	    Image tilesheetImage = new Image("assets/PlayerRed.png");
+	    sprite = new Sprite(tilesheetImage, 0,0, Duration.seconds(.2), side);
+        sprite.setX(posX);
+        sprite.setY(posY);
+	    }
+     
         //directionArrow = sprite.getClip().;
 
 	    // Tous les joueurs ont une vitesse aleatoire entre 0.0 et 1.0
-        Random randomGenerator = new Random();
-        step = randomGenerator.nextFloat();
-
-        // Pour commencer les joueurs ont une vitesse / un pas fixe
-        // step = 1;
-	    
+        //Random randomGenerator = new Random();
+        //speed = randomGenerator.nextFloat();
+	     speed = 0.6;
 	  }
 
 	  /**
@@ -82,12 +83,12 @@ public class Player
 	  void display()
 	  {
 		  graphicsContext.save(); // saves the current state on stack, including the current transform
-	      rotate(graphicsContext, angle, x + directionArrow.getWidth() / 2, y + directionArrow.getHeight() / 2);
-		  graphicsContext.drawImage(directionArrow, x, y);
+	      //rotate(graphicsContext, angle, posX + directionArrow.getWidth() / 2, posY + directionArrow.getHeight() / 2);
+		  //graphicsContext.drawImage(directionArrow, posX, posY);
 		  graphicsContext.restore(); // back to original state (before rotation)
 	  }
 
-	 private void rotate(GraphicsContext gc, double angle, double px, double py) {
+	 /**private void rotate(GraphicsContext gc, double angle, double px, double py) {
 		  Rotate r = new Rotate(angle, px, py);
 		  gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
 	  }
@@ -95,29 +96,62 @@ public class Player
 	  /**
 	   *  Deplacement du joueur vers la gauche, on cantonne le joueur sur le plateau de jeu
 	   */
-	 
-	  void moveLeft() 
-	  {	    
-	    if (x > 10 && x < 520) 
-	    {
-			spriteAnimate();
-		    x -= step;
-	    }
+	 public void moves(ArrayList<String> input,int w, int h) {
+		 
+		 if (input.contains("D")){this.moveRight(w);}
+		 else if (input.contains("Q")) { this.moveLeft();}
+		 else if (input.contains("Z")) { this.moveUp();}
+		 else if (input.contains("S")) { this.moveDown(h);} 
+	 }
+	  void moveLeft() // online width
+	  {	
+		spriteAnimate();  
+	    posX -= speed;
+		if( posX < 0) {
+			posX = 0;
+		}  
 	  }
 
 	  /**
 	   *  Deplacement du joueur vers la droite
 	   */
-	  void moveRight() 
+	  void moveRight(int w) 
 	  {
-	    if (x > 10 && x < 520) 
-	    {
-			spriteAnimate();
-		    x += step;
-	    }
+		spriteAnimate();  
+		posX += speed;
+	    if( posX > (w/2) -50) {
+		    posX = (w/2) -50;
+		}    
+	  }
+	  
+	  void moveUp()
+	  {	
+		  
+		spriteAnimate();  
+		posY -= speed;
+		if( posY < 0) {
+			posY = 0;
+		}
 	  }
 
-	  
+	  void moveDown(int h)
+	  {	  
+		
+		 spriteAnimate();  
+		 posY += speed;
+		 if( posY > h -50) {
+			 posY = h - 50;
+		 }
+		 /**
+	    if (posY > 1 &&  posY < 600/2) 
+	    {
+			spriteAnimate();
+		    posY += speed;
+	    }else
+	    {
+	    	posY-= speed;
+	    }**/
+	  }
 	  /**
 	   *  Rotation du joueur vers la gauche
 	   */
@@ -132,7 +166,6 @@ public class Player
 	    }
 
 	  }
-
 	  
 	  /**
 	   *  Rotation du joueur vers la droite
@@ -148,9 +181,10 @@ public class Player
 	    }
 	  }
 
-
-	  void shoot(){
+	   public Projectile shoot(GraphicsContext gc){
 	  	sprite.playShoot();
+	  	Projectile balle = new Projectile(gc,this.posX,this.posY);
+	  	return balle;
 	  }
 	  
 	  /**
@@ -158,15 +192,15 @@ public class Player
 	   */
 	  void boost() 
 	  {
-	    x += step*2;
+	      posX += speed*2;
 		  spriteAnimate();
 	  }
 
 	  void spriteAnimate(){
 	  	  //System.out.println("Animating sprite");
 		  if(!sprite.isRunning) {sprite.playContinuously();}
-		  sprite.setX(x);
-		  sprite.setY(y);
+		  sprite.setX(posX);
+		  sprite.setY(posY);
 	  }
 	  
 }
