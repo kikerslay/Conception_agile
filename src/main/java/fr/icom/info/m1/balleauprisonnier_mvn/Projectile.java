@@ -13,11 +13,12 @@ public class Projectile extends Entity{
 		graphicsContext = gc;
 		posX = x;
 		posY = y;
-		speed = 0.5;
+		speed = 1.5;
 		Image tilesheetImage = new Image("assets/ball.png");
 	    sprite = new Sprite(tilesheetImage, 0,0, Duration.seconds(.2), null);
 	    sprite.setX(posX);
 	    sprite.setY(posY);
+		gc.drawImage(new Image("assets/ball.png"), 0, 600-50,10,10);
 	}
 	
 	// getter de la positionX
@@ -40,14 +41,21 @@ public class Projectile extends Entity{
 	}
 	
 	// On affiche la balle 
-	public void draw(Entity en) {
+	public void draw(Entity e) {
 		//graphicsContext.fillOval(ballspeedX, ballspeedY, ballrayon, ballrayon);
-		double pos_Y = en.posY;
-		graphicsContext.drawImage(new Image("assets/ball.png"), en.posX, pos_Y);
-		System.out.println(posY);
-		double cpt = en.posY;
-		cpt = cpt - speed;
-		this.SetPositionY(cpt);
+		//double pos_Y = posY;
+		graphicsContext.drawImage(new Image("assets/ball.png"), this.posX/*en.posX*/,this.posY /*pos_Y*/,25,25);
+		//System.out.println(posY);
+		double cpt = posX;
+		cpt = cpt + speed;
+		this.SetPositionX(cpt);
+		System.out.println(cpt);
+		if(cpt >= (700-e.posX)) {
+		this.SetPositionX(700-e.posX);	
+		}
+		/*if (cpt > 700 - posX) {
+			this.SetPositionX(cpt);
+		}*/
 	}
 	
 }

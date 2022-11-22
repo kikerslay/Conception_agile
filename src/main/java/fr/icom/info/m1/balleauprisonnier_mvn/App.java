@@ -30,10 +30,10 @@ public class App extends Application
         Scene scene = new Scene( root );
 
         // On cree le terrain de jeu et on l'ajoute a la racine de la scene
-        Field gameField = new Field(scene, 800, 600 );
+        Field gameField = new Field(scene, 700, 500 );
         root.getChildren().add( gameField );
 		root.getChildren().add(gameField.getEquipe1()[0].sprite);
-        root.getChildren().add(gameField.getProjectile()[0].sprite);
+        //root.getChildren().add(gameField.getProjectile()[0].sprite);
 		root.getChildren().add(gameField.getEquipe1()[1].sprite);
 		root.getChildren().add(gameField.getEquipe1()[2].sprite);
 		root.getChildren().add(gameField.getEquipe2()[0].sprite);

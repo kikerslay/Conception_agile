@@ -27,8 +27,8 @@ class Sprite extends ImageView {
 
         numCellsWalk = 9;
 
-        int lineNumber = 7;
-        if(side == "right"){
+        int lineNumber = 9;
+        if(side == "left"){
             lineNumber += 2;
         }
 

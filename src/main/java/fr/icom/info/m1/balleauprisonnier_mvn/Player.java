@@ -41,6 +41,7 @@ public class Player extends Entity
 	    graphicsContext = gc;
 	    playerColor=color;
 	    angle = 0;
+	    alive = true;
 	    //hitbox = new Rectangle();
 
 	    // On charge la representation du joueur
@@ -98,10 +99,11 @@ public class Player extends Entity
 	   */
 	 public void moves(ArrayList<String> input,int w, int h) {
 		 
-		 if (input.contains("D")){this.moveRight(w);}
-		 else if (input.contains("Q")) { this.moveLeft();}
-		 else if (input.contains("Z")) { this.moveUp();}
-		 else if (input.contains("S")) { this.moveDown(h);} 
+		 if (input.contains("D")) { this.moveRight(w);}
+		 if (input.contains("Q")) { this.moveLeft();}
+		 if (input.contains("Z")) { this.moveUp();}
+		 if (input.contains("S")) { this.moveDown(h);}
+		 
 	 }
 	  void moveLeft() // online width
 	  {	
@@ -181,10 +183,11 @@ public class Player extends Entity
 	    }
 	  }
 
-	   public Projectile shoot(GraphicsContext gc){
+	   public Projectile  shoot(GraphicsContext gc){
 	  	sprite.playShoot();
-	  	Projectile balle = new Projectile(gc,this.posX,this.posY);
+	  	Projectile balle = new Projectile(gc,this.posX+45,this.posY+35);
 	  	return balle;
+	  	
 	  }
 	  
 	  /**

@@ -13,5 +13,5 @@ public class Entity {
 	public boolean collision = false;
 	public GraphicsContext graphicsContext; 
 	public Sprite sprite;
-	
+	public boolean alive;
 }

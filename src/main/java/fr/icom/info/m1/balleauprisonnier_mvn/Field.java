@@ -31,7 +31,7 @@ public class Field extends Canvas {
     ArrayList<String> input = new ArrayList<String>();
     
     /** Balle **/
-    Projectile [] balle = new Projectile[1];
+    Projectile [] balle = new Projectile[3];
     
     final GraphicsContext gc;
     final int width;
@@ -55,27 +55,27 @@ public class Field extends Canvas {
 		this.setFocusTraversable(true);
 		
         gc = this.getGraphicsContext2D();
-        balle[0] = new Projectile(gc, w/2, h-50);
+        balle[0] = new Projectile(gc,0,0);
         
         //balle[0].draw();
         /** On initialise le terrain de jeu */
-    	equipe1[0] = new Player(gc, colorMap[0], 0, 20, "left"); // milieu 
-    	equipe1[0].display();
+    	equipe1[0] = new Player(gc, colorMap[0], 175, 100, "left"); // 1er joueur gauche 
+    	//equipe1[0].display();
 
-		equipe1[1] = new Player(gc, colorMap[0], 0, h-50, "left"); // bas gauche 0 h-50
-    	equipe1[1].display();
+		equipe1[1] = new Player(gc, colorMap[0], 175, 200, "left"); // bas gauche 0 h-50
+    	//equipe1[1].display();
 
-		equipe1[2] = new Player(gc, colorMap[0], 0, h/2, "left"); //  bas droite w h-50
-    	equipe1[2].display();
+		equipe1[2] = new Player(gc, colorMap[0], 175, h-200, "left"); //  bas droite w h-50
+    	//equipe1[2].display();
 
-    	equipe2[0] = new PlayerIA(gc, colorMap[1], w, h/2, "right"); // milieu 
-    	equipe2[0].display();
+    	equipe2[0] = new PlayerIA(gc, colorMap[1], w-230, 100, "right"); // milieu 
+    	//equipe2[0].display();
 
-		equipe2[1] = new PlayerIA(gc, colorMap[1], w, h-50, "right"); // haut a  gauche 0 20
-    	equipe2[1].display();
+		equipe2[1] = new PlayerIA(gc, colorMap[1], w-230, 200, "right"); // haut a  gauche 0 20
+    	//equipe2[1].display();
 
-		equipe2[2] = new PlayerIA(gc, colorMap[1], w-50, 20, "right"); // haut a droite  w-50 20
-    	equipe2[2].display();
+		equipe2[2] = new PlayerIA(gc, colorMap[1], w-230, h-200, "right"); // haut a droite  w-50 20
+    	//equipe2[2].display();
     	
 
 	    /** 
@@ -123,23 +123,25 @@ public class Field extends Canvas {
 	        public void handle(long currentNanoTime)
 	        {	 
 	            // On nettoie le canvas a chaque frame
-	            gc.setFill( Color.WHITE);
-	            gc.fillRect(0, 0, width, height);
-	            gc.lineTo(w, h/2);
-	        	gc.drawImage(new Image("assets/terrain.png"), 100,10,600,400);
-	 
+	            //gc.setFill( Color.WHITE);
+	            //gc.fillRect(0, 0, width, height);
+	            //gc.lineTo(w, h/2);
+	        	gc.drawImage(new Image("assets/terrain.png"), 0,0,700,500);
+	        	//balle[0].draw();
 	            //balle[0] = new Projectile(gc, w/2, h-5);
 	            // Deplacement et affichage des joueurs
 	        	for (int i = 0; i < equipe1.length; i++) 
 	    	    {
 	        		equipe1[0].moves(input,width,height);
-	        		equipe1[i].display();
-	        		equipe2[i].display();
+	        		//equipe1[i].display();
+	        		//equipe2[i].display();
 	        		
 	    	    }
-	        	for (int i = 0; i < balle.length; i++) {
-	        		//balle[i].draw();
+	        	if( input.contains("T")){
+	        		balle[0] = equipe1[0].shoot(gc);
+	        		
 	        	}
+	        	balle[0].draw(equipe1[0]);
 	    	}
 	     }.start(); // On lance la boucle de rafraichissement 
 	     
