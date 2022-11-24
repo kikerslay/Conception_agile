@@ -20,7 +20,6 @@ public class Player extends Entity
 {
 	
 	  String playerColor;
-	  
 	  // On une image globale du joueur 
 	  //Image directionArrow;
 	  //Sprite sprite;
@@ -183,12 +182,24 @@ public class Player extends Entity
 	    }
 	  }
 
-	   public Projectile  shoot(GraphicsContext gc){
+	   public void shoot(Projectile balle){
 	  	sprite.playShoot();
-	  	Projectile balle = new Projectile(gc,this.posX+45,this.posY+35);
-	  	return balle;
-	  	
+	  	if(balle.alive == false) {
+	  		balle.SetPositionX(this.posX);
+	  		balle.SetPositionY(this.posY);
+	  		balle.setEtat(true);
+	  	}
+	  	else{
+	  		balle.move();
+	  	}
+	  	/*if(balle.alive == false) {
+	  		balle.move();
+	  	}*/
 	  }
+	   
+	   public void getBalle(Projectile balle) {
+		   
+	   }
 	  
 	  /**
 	   *  Deplacement en mode boost

@@ -21,6 +21,7 @@ import javafx.scene.shape.Line;
  */
 public class Field extends Canvas {
 	
+	private static Field fObject;
 	/** Joueurs */
 	Player [] equipe1 = new Player[3];
 	PlayerIA [] equipe2 = new PlayerIA[3];
@@ -31,7 +32,6 @@ public class Field extends Canvas {
     ArrayList<String> input = new ArrayList<String>();
     
     /** Balle **/
-    Projectile [] balle = new Projectile[3];
     
     final GraphicsContext gc;
     final int width;
@@ -45,7 +45,7 @@ public class Field extends Canvas {
      * @param w largeur du canvas
      * @param h hauteur du canvas
      */
-	public Field(Scene scene, int w, int h) 
+	private Field(Scene scene, int w, int h) 
 	{
 		super(w, h); 
 		width = w;
@@ -55,8 +55,8 @@ public class Field extends Canvas {
 		this.setFocusTraversable(true);
 		
         gc = this.getGraphicsContext2D();
-        balle[0] = new Projectile(gc,0,0);
         
+        Projectile balle = new Projectile(gc,(w/2)-10,(h/2)-20);
         //balle[0].draw();
         /** On initialise le terrain de jeu */
     	equipe1[0] = new Player(gc, colorMap[0], 175, 100, "left"); // 1er joueur gauche 
@@ -128,6 +128,8 @@ public class Field extends Canvas {
 	            //gc.lineTo(w, h/2);
 	        	gc.drawImage(new Image("assets/terrain.png"), 0,0,700,500);
 	        	//balle[0].draw();
+	        	  balle.draw();
+	        	  //balle.move();
 	            //balle[0] = new Projectile(gc, w/2, h-5);
 	            // Deplacement et affichage des joueurs
 	        	for (int i = 0; i < equipe1.length; i++) 
@@ -135,16 +137,24 @@ public class Field extends Canvas {
 	        		equipe1[0].moves(input,width,height);
 	        		//equipe1[i].display();
 	        		//equipe2[i].display();
-	        		
+	        		//equipe1[0].shoot(balle);
 	    	    }
-	        	if( input.contains("T")){
-	        		balle[0] = equipe1[0].shoot(gc);
+	        	equipe1[0].shoot(balle);
+	        
+	       
 	        		
-	        	}
-	        	balle[0].draw(equipe1[0]);
 	    	}
 	     }.start(); // On lance la boucle de rafraichissement 
 	     
+	}
+	 //methode pour singleton pattern
+	public static Field getInstance(Scene scene, int w, int h) {
+	      if(fObject == null) {
+	         fObject = new Field( scene,  w,  h); 
+	      }
+
+	       // returns the singleton object
+	       return fObject;
 	}
 
 	public Player[] getEquipe1() {
@@ -154,7 +164,7 @@ public class Field extends Canvas {
 	public PlayerIA[] getEquipe2() {
 		return equipe2;
 	}
-	public Projectile[] getProjectile() {
+	/*public Projectile[] getProjectile() {
 		return balle;
-	}
+	}*/
 }

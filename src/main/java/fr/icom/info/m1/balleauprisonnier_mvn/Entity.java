@@ -4,7 +4,7 @@ import java.awt.Rectangle;
 
 import javafx.scene.canvas.GraphicsContext;
 
-public class Entity {
+public abstract class Entity  {
 	public double speed;
 	public double posX;
 	public double posY;
