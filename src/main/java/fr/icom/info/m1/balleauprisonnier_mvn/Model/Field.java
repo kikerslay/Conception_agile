@@ -1,19 +1,11 @@
-package fr.icom.info.m1.balleauprisonnier_mvn;
-
-
-import java.util.ArrayList;
+package fr.icom.info.m1.balleauprisonnier_mvn.Model;
 
 
 
-import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
+
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
+
 
 /**
  * Classe gerant le terrain de jeu.
@@ -23,20 +15,20 @@ public class Field extends Canvas {
 	
 	private static Field fObject;
 	/** Joueurs */
-	Player [] equipe1 = new Player[3];
-	PlayerIA [] equipe2 = new PlayerIA[3];
-	
+	 private Player [] equipe1 = new Player[3];
+	 private PlayerIA [] equipe2 = new PlayerIA[3];
 	/** Couleurs possibles */
+	private Projectile balle;
 	String[] colorMap = new String[] {"blue", "green", "orange", "purple", "yellow"};
 	/** Tableau traçant les evenements */
-    ArrayList<String> input = new ArrayList<String>();
+   // ArrayList<String> input = new ArrayList<String>();
     
     /** Balle **/
     
     final GraphicsContext gc;
     final int width;
     final int height;
-    
+    //Controller controller = new Controller()
    
     /**
      * Canvas dans lequel on va dessiner le jeu.
@@ -45,7 +37,7 @@ public class Field extends Canvas {
      * @param w largeur du canvas
      * @param h hauteur du canvas
      */
-	private Field(Scene scene, int w, int h) 
+	private Field( int w, int h) 
 	{
 		super(w, h); 
 		width = w;
@@ -56,7 +48,7 @@ public class Field extends Canvas {
 		
         gc = this.getGraphicsContext2D();
         
-        Projectile balle = new Projectile(gc,(w/2)-10,(h/2)-20);
+        balle = new Projectile(gc,(w/2)-10,(h/2)-20);
         //balle[0].draw();
         /** On initialise le terrain de jeu */
     	equipe1[0] = new Player(gc, colorMap[0], 175, 100, "left"); // 1er joueur gauche 
@@ -83,7 +75,7 @@ public class Field extends Canvas {
 	     * quand une touche est pressee on la rajoute a la liste d'input
 	     *   
 	     */
-	    this.setOnKeyPressed(
+	    /*this.setOnKeyPressed( // Controller
 	    		new EventHandler<KeyEvent>()
 	    	    {
 	    	        public void handle(KeyEvent e)
@@ -95,12 +87,12 @@ public class Field extends Canvas {
 	    	        }
 	    	    });
 
-	    /** 
+	    /* 
 	     * Event Listener du clavier 
 	     * quand une touche est relachee on l'enleve de la liste d'input
 	     *   
 	     */
-	    this.setOnKeyReleased(
+	   /* this.setOnKeyReleased( // controller
 	    	    new EventHandler<KeyEvent>()
 	    	    {
 	    	        public void handle(KeyEvent e)
@@ -118,7 +110,7 @@ public class Field extends Canvas {
 	     * soit environ 60 fois par seconde.
 	     * 
 	     */
-	    new AnimationTimer() 
+	    /*new AnimationTimer() 
 	    {
 	        public void handle(long currentNanoTime)
 	        {	 
@@ -127,30 +119,39 @@ public class Field extends Canvas {
 	            //gc.fillRect(0, 0, width, height);
 	            //gc.lineTo(w, h/2);
 	        	gc.drawImage(new Image("assets/terrain.png"), 0,0,700,500);
+	        
 	        	//balle[0].draw();
 	        	  balle.draw();
+	        	
 	        	  //balle.move();
 	            //balle[0] = new Projectile(gc, w/2, h-5);
 	            // Deplacement et affichage des joueurs
 	        	for (int i = 0; i < equipe1.length; i++) 
 	    	    {
 	        		equipe1[0].moves(input,width,height);
+	        		equipe2[i].isShot(balle);
 	        		//equipe1[i].display();
 	        		//equipe2[i].display();
-	        		//equipe1[0].shoot(balle);
+	        		equipe1[0].shoot(balle);
 	    	    }
-	        	equipe1[0].shoot(balle);
-	        
 	       
+	        	equipe2[0].setPositionX(10);
+	        	equipe2[0].setPositionY(10);
+	        	System.out.println(equipe1[0].getPositionX());
+	        	System.out.println(equipe1[0].getPositionY());
+	        	//if(balle.getPositionX() > 200) {
+	        	//equipe1[0] = null;
+	        		System.out.println(equipe2[0]);
+	        	//}
 	        		
 	    	}
 	     }.start(); // On lance la boucle de rafraichissement 
-	     
+	     */
 	}
 	 //methode pour singleton pattern
-	public static Field getInstance(Scene scene, int w, int h) {
+	public static Field getInstance(int w, int h) {
 	      if(fObject == null) {
-	         fObject = new Field( scene,  w,  h); 
+	         fObject = new Field(w,  h); 
 	      }
 
 	       // returns the singleton object
@@ -164,7 +165,12 @@ public class Field extends Canvas {
 	public PlayerIA[] getEquipe2() {
 		return equipe2;
 	}
-	/*public Projectile[] getProjectile() {
-		return balle;
-	}*/
+	public Projectile getProjectile() {
+		return this.balle;
+	}
+	
+	public GraphicsContext getGraphics() {
+		return gc;
+	}
+	
 }

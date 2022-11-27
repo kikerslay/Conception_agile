@@ -1,6 +1,7 @@
-package fr.icom.info.m1.balleauprisonnier_mvn;
+package fr.icom.info.m1.balleauprisonnier_mvn.Vue;
 
-
+import fr.icom.info.m1.balleauprisonnier_mvn.Controlleur.Controller;
+import fr.icom.info.m1.balleauprisonnier_mvn.Model.Field;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -25,21 +26,19 @@ public class App extends Application
 	{
 		// Nom de la fenetre
         stage.setTitle("BalleAuPrisonnier");
-
+       
         Group root = new Group();
         Scene scene = new Scene( root );
-
+        Controller controleur = new Controller();
         // On cree le terrain de jeu et on l'ajoute a la racine de la scene
-        Field gameField = Field.getInstance(scene, 700, 500 );
+        Field gameField =  Field.getInstance(700,800);
+        controleur.runController(gameField,gameField.getEquipe1(),gameField.getEquipe2(),gameField.getProjectile());
         root.getChildren().add( gameField );
-		root.getChildren().add(gameField.getEquipe1()[0].sprite);
-        //root.getChildren().add(gameField.getProjectile()[0].sprite);
-		root.getChildren().add(gameField.getEquipe1()[1].sprite);
-		root.getChildren().add(gameField.getEquipe1()[2].sprite);
-		root.getChildren().add(gameField.getEquipe2()[0].sprite);
-		root.getChildren().add(gameField.getEquipe2()[1].sprite);
-		root.getChildren().add(gameField.getEquipe2()[2].sprite);
-		
+        for (int i = 0; i < 3 ;i++) {
+        	root.getChildren().add(gameField.getEquipe1()[i].sprite);
+        	root.getChildren().add(gameField.getEquipe2()[i].sprite);
+        }
+
         // On ajoute la scene a la fenetre et on affiche
         stage.setScene( scene );
         stage.show();

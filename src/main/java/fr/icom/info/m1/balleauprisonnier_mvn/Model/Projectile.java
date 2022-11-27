@@ -1,4 +1,4 @@
-package fr.icom.info.m1.balleauprisonnier_mvn;
+package fr.icom.info.m1.balleauprisonnier_mvn.Model;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -20,7 +20,9 @@ public class Projectile extends Entity{
 	    sprite.setX(posX);
 	    sprite.setY(posY);
 		gc.drawImage(new Image("assets/ball.png"), 0, 600-50,10,10);
-		alive = false;
+		alive = true;
+		collision = false;
+		
 	}
 	
 	// getter de la positionX
@@ -48,33 +50,25 @@ public class Projectile extends Entity{
 	public void setEtat(boolean t){
 		this.alive = t;
 	}
+	
+	public void setCol(boolean t){
+		this.collision = t;
+	}
 
 	
 	// On affiche la balle 
 	public void draw() {
-		//graphicsContext.fillOval(ballspeedX, ballspeedY, ballrayon, ballrayon);
-		//double pos_Y = posY;
-		graphicsContext.drawImage(new Image("assets/ball.png"), this.posX/*en.posX*/,this.posY /*pos_Y*/,25,25);
-		//this.alive = true;
-		//System.out.println(posY);
-		/*double check = 0;
-		check += 10;
-		double cpt = posX;
-		cpt = cpt + speed;
-		this.SetPositionX(cpt);
-		System.out.println(cpt);
-		if(check >= this.range) {
-			this.SetPositionX(230);	
+		if(this.alive == true) {
+			graphicsContext.drawImage(new Image("assets/ball.png"), this.posX/*en.posX*/,this.posY /*pos_Y*/,25,25);
 		}
-		/*if (cpt > 700 - posX) {
-			this.SetPositionX(cpt);
-		}*/
+	
 	}
 	public void move(){
 		double s = posX;
 		//while(this.traveltime !=0) {
 			s = s + speed;
 			this.SetPositionX(s);
+			this.collision = true;
 			this.traveltime -= 2;
 		//}
 		System.out.println(this.posX);

@@ -1,4 +1,4 @@
-package fr.icom.info.m1.balleauprisonnier_mvn;
+package fr.icom.info.m1.balleauprisonnier_mvn.Model;
 
 
 import java.util.ArrayList;
@@ -20,9 +20,6 @@ public class Player extends Entity
 {
 	
 	  String playerColor;
-	  // On une image globale du joueur 
-	  //Image directionArrow;
-	  //Sprite sprite;
 	  ImageView PlayerDirectionArrow;
 	  
 	  /**
@@ -34,29 +31,15 @@ public class Player extends Entity
 	   */
 	  Player(GraphicsContext gc, String color, int xInit, int yInit, String side)
 	  {
-		// Tous les joueurs commencent au centre du canvas, 
 	    posX = xInit;               
 	    posY = yInit;
 	    graphicsContext = gc;
 	    playerColor=color;
 	    angle = 0;
 	    alive = true;
-	    //hitbox = new Rectangle();
+	    collision = true;
 
-	    // On charge la representation du joueur
-        /**if(side=="top"){
-        	directionArrow = new Image("assets/PlayerArrowDown.png");
-		}
-		else{
-			directionArrow = new Image("assets/PlayerArrowUp.png");
-		}
-        
-        PlayerDirectionArrow = new ImageView();
-        PlayerDirectionArrow.setImage(directionArrow);
-        PlayerDirectionArrow.setFitWidth(10);
-        PlayerDirectionArrow.setPreserveRatio(true);
-        PlayerDirectionArrow.setSmooth(true);
-        PlayerDirectionArrow.setCache(true);**/
+
 	    if(playerColor == "blue") {
 	        Image tilesheetImage = new Image("assets/PlayerBlue.png");
 	        sprite = new Sprite(tilesheetImage, 0,0, Duration.seconds(.2), side);
@@ -69,8 +52,6 @@ public class Player extends Entity
         sprite.setY(posY);
 	    }
      
-        //directionArrow = sprite.getClip().;
-
 	    // Tous les joueurs ont une vitesse aleatoire entre 0.0 et 1.0
         //Random randomGenerator = new Random();
         //speed = randomGenerator.nextFloat();
@@ -99,12 +80,14 @@ public class Player extends Entity
 	 public void moves(ArrayList<String> input,int w, int h) {
 		 
 		 if (input.contains("D")) { this.moveRight(w);}
-		 if (input.contains("Q")) { this.moveLeft();}
+		 if (input.contains("Q")) { this.moveLeft();
+			 System.out.println("Q")
+			 ;}
 		 if (input.contains("Z")) { this.moveUp();}
 		 if (input.contains("S")) { this.moveDown(h);}
 		 
 	 }
-	  void moveLeft() // online width
+	  void moveLeft()
 	  {	
 		spriteAnimate();  
 	    posX -= speed;
@@ -143,15 +126,6 @@ public class Player extends Entity
 		 if( posY > h -50) {
 			 posY = h - 50;
 		 }
-		 /**
-	    if (posY > 1 &&  posY < 600/2) 
-	    {
-			spriteAnimate();
-		    posY += speed;
-	    }else
-	    {
-	    	posY-= speed;
-	    }**/
 	  }
 	  /**
 	   *  Rotation du joueur vers la gauche
@@ -188,17 +162,17 @@ public class Player extends Entity
 	  		balle.SetPositionX(this.posX);
 	  		balle.SetPositionY(this.posY);
 	  		balle.setEtat(true);
+	  		balle.setCol(true);
 	  	}
 	  	else{
 	  		balle.move();
 	  	}
-	  	/*if(balle.alive == false) {
-	  		balle.move();
-	  	}*/
 	  }
 	   
 	   public void getBalle(Projectile balle) {
-		   
+		   if (balle.collision = false) {
+			   	balle.setEtat(false);
+		   }
 	   }
 	  
 	  /**
@@ -209,7 +183,14 @@ public class Player extends Entity
 	      posX += speed*2;
 		  spriteAnimate();
 	  }
-
+	  void isShot(Projectile balle) {
+		  if(balle.collision == true) {
+			  if (balle.getPositionX() == this.posX && balle.getPositionY() == this.posY) {
+				  this.posX = 0;
+				  this.posY = 0;
+			  }
+		  }
+	  }
 	  void spriteAnimate(){
 	  	  //System.out.println("Animating sprite");
 		  if(!sprite.isRunning) {sprite.playContinuously();}
