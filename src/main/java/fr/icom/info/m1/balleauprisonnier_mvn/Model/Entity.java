@@ -8,11 +8,14 @@ public abstract class Entity  {
 	public double speed;
 	public double posX;
 	public double posY;
+	public double witdh;
+	public double height;
 	public double angle;
 	public Rectangle hitbox;
 	public boolean collision;
 	public GraphicsContext graphicsContext; 
 	public Sprite sprite;
+	public String side;
 	public boolean alive;
 	
 	public double getPositionX() {
@@ -30,4 +33,12 @@ public abstract class Entity  {
 	public void setPositionY(double y) {
 		 this.posY = y;
 	}
+	
+	public Bbox bbox() {
+		return new Bbox(this.posX, this.posX +10, this.posY , this.posY +10 );
+	}
+	public boolean isColliding(Entity other) {
+		return bbox().isColliding(other.bbox());
+	}
+	
 }

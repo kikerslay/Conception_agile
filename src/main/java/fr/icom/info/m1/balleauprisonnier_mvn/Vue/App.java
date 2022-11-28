@@ -25,7 +25,7 @@ public class App extends Application
 	public void start(Stage stage) throws Exception 
 	{
 		// Nom de la fenetre
-        stage.setTitle("BalleAuPrisonnier");
+        stage.setTitle("Balle Au Prisonnier");
        
         Group root = new Group();
         Scene scene = new Scene( root );
@@ -35,9 +35,10 @@ public class App extends Application
         controleur.runController(gameField,gameField.getEquipe1(),gameField.getEquipe2(),gameField.getProjectile());
         root.getChildren().add( gameField );
         for (int i = 0; i < 3 ;i++) {
-        	root.getChildren().add(gameField.getEquipe1()[i].sprite);
+        	
         	root.getChildren().add(gameField.getEquipe2()[i].sprite);
         }
+        root.getChildren().add(gameField.getEquipe1()[0].sprite);
 
         // On ajoute la scene a la fenetre et on affiche
         stage.setScene( scene );
@@ -46,7 +47,7 @@ public class App extends Application
 	
     public static void main(String[] args) 
     {
-        //System.out.println( "Hello World!" );
+    
     	Application.launch(args);
     }
 }

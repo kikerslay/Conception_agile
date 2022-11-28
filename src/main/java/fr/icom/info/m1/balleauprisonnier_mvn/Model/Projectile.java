@@ -9,6 +9,7 @@ public class Projectile extends Entity{
 	public static final double ballrayon = 15; // rayon fix de la balle 
 	public final double range = 150; // porter de la balle 
 	public double traveltime = 180;
+	public boolean moving;
 	public Projectile(GraphicsContext gc, double x, double y)
 	{
 		graphicsContext = gc;
@@ -22,7 +23,7 @@ public class Projectile extends Entity{
 		gc.drawImage(new Image("assets/ball.png"), 0, 600-50,10,10);
 		alive = true;
 		collision = false;
-		
+		moving = false;
 	}
 	
 	// getter de la positionX
@@ -47,10 +48,17 @@ public class Projectile extends Entity{
 	public boolean getEtat() {
 		return this.alive;
 	}
+	
+	public boolean getMove() {
+		return this.moving;
+	}
+	
 	public void setEtat(boolean t){
 		this.alive = t;
 	}
-	
+	public void setMove(boolean t){
+		this.moving = t;
+	}
 	public void setCol(boolean t){
 		this.collision = t;
 	}
@@ -59,22 +67,24 @@ public class Projectile extends Entity{
 	// On affiche la balle 
 	public void draw() {
 		if(this.alive == true) {
-			graphicsContext.drawImage(new Image("assets/ball.png"), this.posX/*en.posX*/,this.posY /*pos_Y*/,25,25);
+			graphicsContext.drawImage(new Image("assets/ball.png"), this.posX,this.posY,25,25);
 		}
 	
 	}
 	public void move(){
-		double s = posX;
-		//while(this.traveltime !=0) {
+		double s = 0;
+			s = posX;
+			this.moving = true;
 			s = s + speed;
 			this.SetPositionX(s);
 			this.collision = true;
 			this.traveltime -= 2;
-		//}
-		System.out.println(this.posX);
-		
+
 		if(this.traveltime == 0) {
 			this.speed = 0;
+			this.moving = false;
+			this.collision = false;
 		}
 	}
+	
 }

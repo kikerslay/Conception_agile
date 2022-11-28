@@ -9,7 +9,6 @@ import javafx.util.Duration;
 class Sprite extends ImageView {
     private final Rectangle2D[] walkClips;
     private final Rectangle2D[] shootClips;
-    private int numCells;
     private int numCellsWalk;
     private int numCellsShoot;
     private final Timeline walkTimeline;
@@ -19,7 +18,7 @@ class Sprite extends ImageView {
     public boolean isRunning;
 
     public Sprite(Image animationImage, int numCells, int numRows, Duration frameTime, String side) {
-        this.numCells = numCells;
+
 
         double cellWidth  = 64;//animationImage.getWidth() / numCells; //64x64
         double cellHeight = 64;//animationImage.getHeight() / numRows;

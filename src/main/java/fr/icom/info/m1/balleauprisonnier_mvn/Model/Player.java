@@ -2,13 +2,11 @@ package fr.icom.info.m1.balleauprisonnier_mvn.Model;
 
 
 import java.util.ArrayList;
-import java.util.Random;
+
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.transform.Rotate;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 /**
@@ -21,7 +19,8 @@ public class Player extends Entity
 	
 	  String playerColor;
 	  ImageView PlayerDirectionArrow;
-	  
+      String side;
+	  public boolean hasBall;
 	  /**
 	   * Constructeur du Joueur
 	   * 
@@ -29,7 +28,7 @@ public class Player extends Entity
 	   * @param color couleur du joueur
 	   * @param yInit position verticale
 	   */
-	  Player(GraphicsContext gc, String color, int xInit, int yInit, String side)
+	  Player(GraphicsContext gc, String color, double xInit, double yInit, String s)
 	  {
 	    posX = xInit;               
 	    posY = yInit;
@@ -38,8 +37,8 @@ public class Player extends Entity
 	    angle = 0;
 	    alive = true;
 	    collision = true;
-
-
+	    hasBall = false;
+	    side = s;
 	    if(playerColor == "blue") {
 	        Image tilesheetImage = new Image("assets/PlayerBlue.png");
 	        sprite = new Sprite(tilesheetImage, 0,0, Duration.seconds(.2), side);
@@ -77,12 +76,11 @@ public class Player extends Entity
 	  /**
 	   *  Deplacement du joueur vers la gauche, on cantonne le joueur sur le plateau de jeu
 	   */
-	 public void moves(ArrayList<String> input,int w, int h) {
+	 public void moves(ArrayList<String> input, Projectile balle,int w, int h) {
 		 
 		 if (input.contains("D")) { this.moveRight(w);}
-		 if (input.contains("Q")) { this.moveLeft();
-			 System.out.println("Q")
-			 ;}
+		 if (input.contains("Q")) { this.moveLeft();}
+		 if (input.contains("T")) { this.shoot(balle); balle.setMove(true);}
 		 if (input.contains("Z")) { this.moveUp();}
 		 if (input.contains("S")) { this.moveDown(h);}
 		 
@@ -91,8 +89,8 @@ public class Player extends Entity
 	  {	
 		spriteAnimate();  
 	    posX -= speed;
-		if( posX < 0) {
-			posX = 0;
+		if( posX < 30) {
+			posX = 30;
 		}  
 	  }
 
@@ -103,8 +101,8 @@ public class Player extends Entity
 	  {
 		spriteAnimate();  
 		posX += speed;
-	    if( posX > (w/2) -50) {
-		    posX = (w/2) -50;
+	    if( posX > (w/2) -40) {
+		    posX = (w/2) -40;
 		}    
 	  }
 	  
@@ -113,8 +111,8 @@ public class Player extends Entity
 		  
 		spriteAnimate();  
 		posY -= speed;
-		if( posY < 0) {
-			posY = 0;
+		if( posY < 36) {
+			posY = 36;
 		}
 	  }
 
@@ -123,8 +121,8 @@ public class Player extends Entity
 		
 		 spriteAnimate();  
 		 posY += speed;
-		 if( posY > h -50) {
-			 posY = h - 50;
+		 if( posY > h -142) {
+			 posY = h - 142;
 		 }
 	  }
 	  /**
@@ -157,22 +155,36 @@ public class Player extends Entity
 	  }
 
 	   public void shoot(Projectile balle){
-	  	sprite.playShoot();
-	  	if(balle.alive == false) {
-	  		balle.SetPositionX(this.posX);
-	  		balle.SetPositionY(this.posY);
-	  		balle.setEtat(true);
-	  		balle.setCol(true);
-	  	}
-	  	else{
+	  	
+	  	if(hasBall == true) {
+	  		sprite.playShoot();
+	  		//balle.SetPositionX(this.posX);
+	  		//balle.SetPositionY(this.posY);
+	  		//balle.setEtat(true);
+	  		//balle.setMove(true);
 	  		balle.move();
+	  		balle.setEtat(true);
+	  		this.hasBall = false;
 	  	}
+	
+		   System.out.println(" balle" + this.hasBall);
+	  		//balle.move();
+	  		//this.hasBall = false;
+	  		System.out.println(" balle" + this.hasBall);
+	  	//}
 	  }
 	   
 	   public void getBalle(Projectile balle) {
-		   if (balle.collision = false) {
+		   if ((balle.collision == false) && (balle.moving == false) ) {
+			   System.out.println("GetBalle");
+			    balle.SetPositionX(this.posX);
+		  	    balle.SetPositionY(this.posY);
 			   	balle.setEtat(false);
+			   	balle.traveltime = 180;
+			   	balle.speed = 2.5;
+			   	this.hasBall =true ;
 		   }
+		 
 	   }
 	  
 	  /**
