@@ -26,24 +26,6 @@ public class Projectile extends Entity{
 		moving = false;
 	}
 	
-	// getter de la positionX
-	public double getPositionX() {
-		return posX;
-	}
-	
-	// getter de la positionY
-	public double getPositionY() {
-		return posY;
-	}
-	
-	public void SetPositionX(double x) {
-		this.posX = x;
-	}
-	
-	// getter de la positionY
-	public void SetPositionY(double y) {
-		this.posY = y;
-	}
 	
 	public boolean getEtat() {
 		return this.alive;
@@ -76,7 +58,7 @@ public class Projectile extends Entity{
 			s = posX;
 			this.moving = true;
 			s = s + speed;
-			this.SetPositionX(s);
+			this.setPositionX(s);
 			this.collision = true;
 			this.traveltime -= 2;
 

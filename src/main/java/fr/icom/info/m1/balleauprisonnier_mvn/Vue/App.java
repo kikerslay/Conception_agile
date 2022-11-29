@@ -26,12 +26,13 @@ public class App extends Application
 	{
 		// Nom de la fenetre
         stage.setTitle("Balle Au Prisonnier");
-       
         Group root = new Group();
         Scene scene = new Scene( root );
         Controller controleur = new Controller();
+        
         // On cree le terrain de jeu et on l'ajoute a la racine de la scene
         Field gameField =  Field.getInstance(700,800);
+       
         controleur.runController(gameField,gameField.getEquipe1(),gameField.getEquipe2(),gameField.getProjectile());
         root.getChildren().add( gameField );
         for (int i = 0; i < 3 ;i++) {

@@ -14,11 +14,6 @@ public class PlayerIA extends Player{
    
     public void moveIA(long currenttime,long tt) {
     	
-    	/*if (currenttime - tt >= 1000 && currenttime - tt < 2000) {
-    		this.moveLeft();
-    		System.out.println();
-    	    tt = System.currentTimeMillis();
-    	}*/
     	if (this.posX > 607) {
     		moveLeft = true;
     	}
@@ -44,10 +39,6 @@ public class PlayerIA extends Player{
         	else {
         		this.moveDown(500);
         	}
-    
-    
-  
-    	
     }
     	//
     
@@ -59,14 +50,13 @@ public class PlayerIA extends Player{
         speed = randomGenerator.nextFloat();
    		spriteAnimate();  
    	    posX -= speed;
-   		/*if( posX < 337) {
-   			posX = 337;
-   		}  */
+   	
    	  }
 
    	  /**
    	   *  Deplacement du joueur vers la droite
    	   */
+	
     @Override
    	public void moveRight(int w) 
    	  {
@@ -74,9 +64,7 @@ public class PlayerIA extends Player{
         speed = randomGenerator.nextFloat();
    		spriteAnimate();  
    		posX += speed;
-   	    /*if( posX > w - 93) {
-   		    posX = w - 93;
-   		} */   
+   	   
    	  }
    	 
     @Override
@@ -86,9 +74,7 @@ public class PlayerIA extends Player{
         speed = randomGenerator.nextFloat();
    		spriteAnimate();  
    		posY -= speed;
-   		/*if( posY < 36) {
-   			posY = 36;
-   		}*/
+   		
    	  }
      @Override
    	  public void moveDown(int h)
@@ -97,20 +83,16 @@ public class PlayerIA extends Player{
          speed = randomGenerator.nextFloat();
    		 spriteAnimate();  
    		 posY += speed;
-   		 /*if( posY > h - 142) {
-   			 posY = h - 142;
-   		 }*/
+   		
    	  }
 
     
-    public void isShot(Projectile balle) {
+    public int isShot(Projectile balle,int score) {
 		  if(balle.collision == true) {
-			
+			  	  score += 1;
 				  this.posX = 700 -50;
 				  this.posY = 0;
-				  
-				
-				  
 		  }
+		  return score;
 	  }
 }

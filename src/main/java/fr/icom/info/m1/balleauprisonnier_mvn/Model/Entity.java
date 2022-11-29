@@ -1,6 +1,6 @@
 package fr.icom.info.m1.balleauprisonnier_mvn.Model;
 
-import java.awt.Rectangle;
+
 
 import javafx.scene.canvas.GraphicsContext;
 
@@ -8,10 +8,6 @@ public abstract class Entity  {
 	public double speed;
 	public double posX;
 	public double posY;
-	public double witdh;
-	public double height;
-	public double angle;
-	public Rectangle hitbox;
 	public boolean collision;
 	public GraphicsContext graphicsContext; 
 	public Sprite sprite;

@@ -16,13 +16,15 @@ public class Controller {
 	/** Tableau traçant les evenements */
 	public ArrayList<String> input = new ArrayList<String>();
 	long lastTurn = System.currentTimeMillis();
+	public int score;
 	GraphicsContext gc ;
+	String Newligne=System.getProperty("line.separator");
 	public Controller() {
 		 
 		
 		 Field field =  Field.getInstance(700, 500);
 		 gc = field.getGraphics();
-		 
+		 score = 0;
 		
 		 
 	}
@@ -69,33 +71,34 @@ public class Controller {
 	        			}
 	        			if(balle.getPositionX() > 310 && System.currentTimeMillis() - lastTurn >=1000 )
 	    	        	{
-	    	        		balle.SetPositionX((700/2)-10);
-	    	        		balle.SetPositionY((500/2) -20);
+	    	        		balle.setPositionX((700/2)-10);
+	    	        		balle.setPositionY((500/2) -20);
 	    	        		
 	    	        	}
-	        			if(equipe1[0].isColliding(balle) == true || equipe1[0].hasBall== true){
+	        			if(equipe1[0].isColliding(balle) == true || equipe1[0].getHasBall()== true){
 	        				
 	        				equipe1[0].getBalle(balle);
 	        			} 
 	        			if(equipe2[i].isColliding(balle) == true) {
-	        				//equipe2[i].setPositionX(10);
-	        				equipe2[i].isShot(balle);
+	        				
+	        				score = equipe2[i].isShot(balle,score);
 	        				
 	        			}
 	        			
 	        		equipe1[0].moves(input,balle,700,500);
 	        		equipe2[i].moveIA(System.currentTimeMillis(),lastTurn);
-	        		//equipe2[i].isShot(balle);
-	        	
-	        	
+	        		gc.strokeText("Score : "+ score , 310, 20);	
+	        		gc.strokeText("Z = Deplacement Haut"+Newligne+"Q = Deplacment Gauche D = Deplacement Gauche"
+	        						+Newligne+"S = Deplacement Bas"+Newligne+"T = Tirer",50,440);
 	    	    }
-	        	gc.strokeText(equipe1[0].isColliding(balle) ? "Collision" : "no", 10, 10);
+	        	
 	        	
 	        		
 	    	}
 	       
 	     }.start(); // On lance la boucle de rafraichissement 
-	     
+	    
 	}
+	
 	
 }
