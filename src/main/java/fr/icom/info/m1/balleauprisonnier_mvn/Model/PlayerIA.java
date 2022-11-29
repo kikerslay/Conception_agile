@@ -51,9 +51,6 @@ public class PlayerIA extends Player{
     }
     	//
     
-    
- 
-
 	@Override
     public  void moveLeft()
    	  {	
@@ -109,7 +106,7 @@ public class PlayerIA extends Player{
     public void isShot(Projectile balle) {
 		  if(balle.collision == true) {
 			
-				  this.posX = 0;
+				  this.posX = 700 -50;
 				  this.posY = 0;
 				  
 				

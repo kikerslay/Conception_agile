@@ -101,9 +101,9 @@ public class Player extends Entity
 	  {
 		spriteAnimate();  
 		posX += speed;
-	    /*if( posX > (w/2) -40) {
+	    if( posX > (w/2) -40) {
 		    posX = (w/2) -40;
-		}*/    
+	    }    
 	  }
 	  
 	  void moveUp()
