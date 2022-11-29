@@ -15,7 +15,7 @@ public class Controller {
 	
 	/** Tableau traçant les evenements */
 	public ArrayList<String> input = new ArrayList<String>();
-    
+	long lastTurn = System.currentTimeMillis();
 	GraphicsContext gc ;
 	public Controller() {
 		 
@@ -59,14 +59,20 @@ public class Controller {
 	        	gc.drawImage(new Image("assets/terrain.png"), 0,0,700,500);
 	     
 	        	balle.draw();
-	      
 	            // Deplacement et affichage des joueurs
 	        	for (int i = 0; i < equipe1.length; i++) 
 	    	    {
 	        			if(balle.getMove() == true){
 	        				
 	        				balle.move();
+	        				lastTurn = System.currentTimeMillis();
 	        			}
+	        			if(balle.getPositionX() > 310 && System.currentTimeMillis() - lastTurn >=1000 )
+	    	        	{
+	    	        		balle.SetPositionX((700/2)-10);
+	    	        		balle.SetPositionY((500/2) -20);
+	    	        		
+	    	        	}
 	        			if(equipe1[0].isColliding(balle) == true || equipe1[0].hasBall== true){
 	        				
 	        				equipe1[0].getBalle(balle);
@@ -78,15 +84,13 @@ public class Controller {
 	        			}
 	        			
 	        		equipe1[0].moves(input,balle,700,500);
-	        		equipe2[i].moveIA();
+	        		equipe2[i].moveIA(System.currentTimeMillis(),lastTurn);
 	        		//equipe2[i].isShot(balle);
 	        	
 	        	
 	    	    }
 	        	gc.strokeText(equipe1[0].isColliding(balle) ? "Collision" : "no", 10, 10);
-	        	System.out.println("posX "+ balle.getPositionX());
-	        	System.out.println("traveltime :" +balle.traveltime);
-	        	System.out.println("HasBall "+ equipe1[0].hasBall);
+	        	
 	        		
 	    	}
 	       

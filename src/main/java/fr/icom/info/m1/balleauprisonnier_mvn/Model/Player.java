@@ -101,9 +101,9 @@ public class Player extends Entity
 	  {
 		spriteAnimate();  
 		posX += speed;
-	    if( posX > (w/2) -40) {
+	    /*if( posX > (w/2) -40) {
 		    posX = (w/2) -40;
-		}    
+		}*/    
 	  }
 	  
 	  void moveUp()
@@ -158,20 +158,10 @@ public class Player extends Entity
 	  	
 	  	if(hasBall == true) {
 	  		sprite.playShoot();
-	  		//balle.SetPositionX(this.posX);
-	  		//balle.SetPositionY(this.posY);
-	  		//balle.setEtat(true);
-	  		//balle.setMove(true);
 	  		balle.move();
 	  		balle.setEtat(true);
 	  		this.hasBall = false;
 	  	}
-	
-		   System.out.println(" balle" + this.hasBall);
-	  		//balle.move();
-	  		//this.hasBall = false;
-	  		System.out.println(" balle" + this.hasBall);
-	  	//}
 	  }
 	   
 	   public void getBalle(Projectile balle) {

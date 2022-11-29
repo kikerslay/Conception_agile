@@ -5,21 +5,48 @@ import java.util.Random;
  
 public class PlayerIA extends Player{
 	
-
+	long lastTurn = System.currentTimeMillis();
+	public boolean moveLeft, moveUp;
     PlayerIA(GraphicsContext gc, String color, int xInit, int yInit, String side) {
         super(gc, color, xInit, yInit, side);
- 
+        
     }
    
-    public void moveIA() {
-    
-    	this.moveLeft();
-    	this.moveUp();
-    	this.moveDown(500);
-    	if(this.posX <= (700/2)-10) {
-    		this.moveRight(700);
+    public void moveIA(long currenttime,long tt) {
+    	
+    	/*if (currenttime - tt >= 1000 && currenttime - tt < 2000) {
+    		this.moveLeft();
+    		System.out.println();
+    	    tt = System.currentTimeMillis();
+    	}*/
+    	if (this.posX > 607) {
+    		moveLeft = true;
     	}
+    	if (this.posX < 337) {
+    		moveLeft = false;
+    	}
+    		if(moveLeft) {
+    			this.moveLeft();
+    		}
+    		else {
+    			this.moveRight(700);
+    		}
+ 
+    	if (this.posY > 358) {
+        	moveUp = true;
+        }
+        if (this.posY < 36) {
+        	moveUp = false;
+        }
+        	if(moveUp) {
+        		this.moveUp();
+        	}
+        	else {
+        		this.moveDown(500);
+        	}
     
+    
+  
     	
     }
     	//
@@ -35,9 +62,9 @@ public class PlayerIA extends Player{
         speed = randomGenerator.nextFloat();
    		spriteAnimate();  
    	    posX -= speed;
-   		if( posX < 0) {
-   			posX = 0;
-   		}  
+   		/*if( posX < 337) {
+   			posX = 337;
+   		}  */
    	  }
 
    	  /**
@@ -50,9 +77,9 @@ public class PlayerIA extends Player{
         speed = randomGenerator.nextFloat();
    		spriteAnimate();  
    		posX += speed;
-   	    if( posX > (w/2) -50) {
-   		    posX = (w/2) -50;
-   		}    
+   	    /*if( posX > w - 93) {
+   		    posX = w - 93;
+   		} */   
    	  }
    	 
     @Override
@@ -62,9 +89,9 @@ public class PlayerIA extends Player{
         speed = randomGenerator.nextFloat();
    		spriteAnimate();  
    		posY -= speed;
-   		if( posY < 0) {
-   			posY = 0;
-   		}
+   		/*if( posY < 36) {
+   			posY = 36;
+   		}*/
    	  }
      @Override
    	  public void moveDown(int h)
@@ -73,9 +100,9 @@ public class PlayerIA extends Player{
          speed = randomGenerator.nextFloat();
    		 spriteAnimate();  
    		 posY += speed;
-   		 if( posY > h -50) {
-   			 posY = h - 50;
-   		 }
+   		 /*if( posY > h - 142) {
+   			 posY = h - 142;
+   		 }*/
    	  }
 
     
