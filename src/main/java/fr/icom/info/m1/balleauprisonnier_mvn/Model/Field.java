@@ -26,7 +26,6 @@ public class Field extends Canvas {
     final GraphicsContext gc;
     final int width;
     final int height;
-    //Controller controller = new Controller()
    
     /**
      * Canvas dans lequel on va dessiner le jeu.
@@ -88,7 +87,7 @@ public class Field extends Canvas {
 		return equipe2;
 	}
 	public Projectile getProjectile() {
-		return this.balle;
+		return balle;
 	}
 	
 	public GraphicsContext getGraphics() {

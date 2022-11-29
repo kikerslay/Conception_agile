@@ -11,7 +11,7 @@ public class PlayerIA extends Player{
         super(gc, color, xInit, yInit, side);
         
     }
-   
+       
     public void moveIA(long currenttime,long tt) {
     	
     	if (this.posX > 607) {
@@ -86,7 +86,9 @@ public class PlayerIA extends Player{
    		
    	  }
 
-    
+    /*
+     * Detection de la collision balle IA
+     */
     public int isShot(Projectile balle,int score) {
 		  if(balle.collision == true) {
 			  	  score += 1;

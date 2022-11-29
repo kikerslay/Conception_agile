@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 /**
@@ -29,6 +28,7 @@ public class Player extends Entity
 	   */
 	   public Player(GraphicsContext gc, String color, double xInit, double yInit, String s)
 	  {
+		   
 	    posX = xInit;               
 	    posY = yInit;
 	    graphicsContext = gc;
@@ -37,6 +37,7 @@ public class Player extends Entity
 	    collision = true;
 	    hasBall = false;
 	    side = s;
+	    
 	    if(playerColor == "blue") {
 	        Image tilesheetImage = new Image("assets/PlayerBlue.png");
 	        sprite = new Sprite(tilesheetImage, 0,0, Duration.seconds(.2), side);
@@ -48,10 +49,7 @@ public class Player extends Entity
         sprite.setX(posX);
         sprite.setY(posY);
 	    }
-     
-	    // Tous les joueurs ont une vitesse aleatoire entre 0.0 et 1.0
-        //Random randomGenerator = new Random();
-        //speed = randomGenerator.nextFloat();
+ 
 	     speed = 0.6;
 	  }
 
@@ -123,6 +121,9 @@ public class Player extends Entity
 	  	}
 	  }
 	   
+	   /*
+	    * Ramassage de balle
+	    */
 	   public void getBalle(Projectile balle) {
 		   if ((balle.collision == false) && (balle.moving == false) ) {
 			   System.out.println("GetBalle");
@@ -136,10 +137,7 @@ public class Player extends Entity
 		 
 	   }
 	  
-	  /**
-	   *  Deplacement en mode boost
-	   */
-	
+	 
 	 public void isShot(Projectile balle) {
 		  if(balle.collision == true) {
 			  if (balle.getPositionX() == this.posX && balle.getPositionY() == this.posY) {
